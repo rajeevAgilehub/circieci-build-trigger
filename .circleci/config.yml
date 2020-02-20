@@ -28,17 +28,16 @@ jobs:
             mkdir madfdir
             cd madfdir
             git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git -b madf
+            rm -rf circieci-build-trigger/*
             cd circieci-build-trigger
-            ls
-            rm -rf *
-            ls
-            git add .
-            git commit -m "all files removed except .git"
+            ls -la
             git config credential.helper 'cache --timeout=120'
             git config --global user.email "rajeev.sharma@theagilehub.net"
             git config --global user.name "rajeevAgilehub"
             git config --global github.user "rajeevAgilehub"
             git config --global github.token ${ACCESS_TOKEN}
+            git add .
+            git commit -m "all files removed except .git"
             cd ../../masterdir/circieci-build-trigger
             pwd && ls
             cp -r !(.git) ../../madfdir/circieci-build-trigger
