@@ -29,7 +29,9 @@ jobs:
             cd madfdir
             git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git
             cd circieci-build-trigger
+            ls
             git checkout madf
+            ls -a
             shopt -s extglob
             rm -r !(.git)
             git add .
