@@ -30,8 +30,7 @@ jobs:
             git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git -b madf
             cd circieci-build-trigger
             ls
-            shopt -s extglob
-            rm -r !(.git)
+            rm -rf *
             ls
             git add .
             git commit -m "all files removed except .git"
