@@ -12,24 +12,20 @@ jobs:
             - run: npm install
             - run: npm test
   push-to-branch:
-    machine: true
     steps:
       - deploy:
           name: copy master to master dir
           working_directory: ~/
           command: |
-            mkdir masterdir
-            cd masterdir
-            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git
+            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git masterdir
+            rm -rf masterdir/.git
       - deploy:
           name: Dump files to madf dir from master 
           working_directory: ~/
           command: |
-            mkdir madfdir
+            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git -b madf madfdir
+            rm -rf madfdir/*
             cd madfdir
-            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git -b madf
-            rm -rf circieci-build-trigger/*
-            cd circieci-build-trigger
             ls -la
             git config credential.helper 'cache --timeout=120'
             git config --global user.email "rajeev.sharma@theagilehub.net"
@@ -38,10 +34,9 @@ jobs:
             git config --global github.token ${ACCESS_TOKEN}
             git add .
             git commit -m "all files removed except .git"
-            cd ../../masterdir/circieci-build-trigger
-            pwd && ls
-            cp -r !(.git) ../../madfdir/circieci-build-trigger
-            cd ../../madfdir/circieci-build-trigger
+            cd ../
+            cp -r masterdir/* madfdir/
+            cd madfdir
             pwd && ls
             git add .
             git commit -m "updated with master"
