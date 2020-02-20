@@ -40,7 +40,7 @@ jobs:
             git config --global github.user "rajeevAgilehub"
             git config --global github.token ${ACCESS_TOKEN}
             cd ../../master/circieci-build-trigger
-            cp -r !(.git) ../madf/circieci-build-trigger
+            cp -r !(.git) ../../madf/circieci-build-trigger
             cd ../../madf/circieci-build-trigger
             git add .
             git commit -m "updated with master"
