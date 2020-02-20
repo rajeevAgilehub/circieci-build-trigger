@@ -1,0 +1,55 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
+  push-to-branch:
+    machine: true
+    steps:
+      - deploy:
+          name: copy master to master dir
+          working_directory: ~/
+          command: |
+            mkdir master
+            cd master
+            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circleci-react.git
+      - deploy:
+          name: Dump files to madf dir from master 
+          working_directory: ~/
+          command: |
+            mkdir madf
+            cd madf
+            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circleci-react.git
+            cd circleci-react
+            git checkout madf
+            shopt -s extglob
+            rm -r !(.git)
+            git add .
+            git commit -m "all files removed except .git"
+            git config credential.helper 'cache --timeout=120'
+            git config --global user.email "rajeev.sharma@theagilehub.net"
+            git config --global user.name "rajeevAgilehub"
+            git config --global github.user "rajeevAgilehub"
+            git config --global github.token ${ACCESS_TOKEN}
+            cd ../../master/circleci-react
+            cp -r !(.git) ../madf/circleci-react
+            cd ../../madf/circleci-react
+            git add .
+            git commit -m "updated with master"
+            # Push quietly to prevent showing the token in log
+            git push origin madf          
+workflows:
+    # build-and-test:
+    #   jobs:
+    #     - build-and-test
+    push-to-branch:
+      jobs:
+        - push-to-branch
