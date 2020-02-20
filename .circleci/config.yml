@@ -20,15 +20,15 @@ jobs:
           command: |
             mkdir master
             cd master
-            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circleci-react.git
+            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git
       - deploy:
           name: Dump files to madf dir from master 
           working_directory: ~/
           command: |
             mkdir madf
             cd madf
-            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circleci-react.git
-            cd circleci-react
+            git clone --depth 1 https://${ACCESS_TOKEN}@github.com/rajeevAgilehub/circieci-build-trigger.git
+            cd circieci-build-trigger
             git checkout madf
             shopt -s extglob
             rm -r !(.git)
@@ -39,9 +39,9 @@ jobs:
             git config --global user.name "rajeevAgilehub"
             git config --global github.user "rajeevAgilehub"
             git config --global github.token ${ACCESS_TOKEN}
-            cd ../../master/circleci-react
-            cp -r !(.git) ../madf/circleci-react
-            cd ../../madf/circleci-react
+            cd ../../master/circieci-build-trigger
+            cp -r !(.git) ../madf/circieci-build-trigger
+            cd ../../madf/circieci-build-trigger
             git add .
             git commit -m "updated with master"
             # Push quietly to prevent showing the token in log
