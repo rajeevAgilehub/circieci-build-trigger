@@ -40,7 +40,6 @@ jobs:
             cd madfdir
             pwd && ls
             git add .
-            git branch
             git commit -m "updated with master"
             # Push quietly to prevent showing the token in log
             git push origin madf          
