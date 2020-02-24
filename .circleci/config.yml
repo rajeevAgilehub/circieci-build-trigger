@@ -47,6 +47,7 @@ workflows:
     # build-and-test:
     #   jobs:
     #     - build-and-test
+    version: 2
     push-to-branch:
       jobs:
         - madf-push-approval:
