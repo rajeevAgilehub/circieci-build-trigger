@@ -55,3 +55,7 @@ workflows:
         - push-to-branch:
             requires:
                 - madf-push-approval
+            filters:
+              branches:
+                only:
+                  - master    
