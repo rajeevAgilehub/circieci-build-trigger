@@ -52,6 +52,10 @@ workflows:
       jobs:
         - madf-push-approval:
             type: approval
+            filters:
+              branches:
+                only:
+                  - master 
         - push-to-branch:
             requires:
                 - madf-push-approval
