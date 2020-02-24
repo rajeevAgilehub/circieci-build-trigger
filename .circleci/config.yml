@@ -44,9 +44,11 @@ jobs:
             # Push quietly to prevent showing the token in log
             git push origin madf          
 workflows:
-    # build-and-test:
-    #   jobs:
-    #     - build-and-test
+    build-and-test:
+      jobs:
+        - build-and-test
     push-to-branch:
       jobs:
+        - hold:
+            type: approval
         - push-to-branch
